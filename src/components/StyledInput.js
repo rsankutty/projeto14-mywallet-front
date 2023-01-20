@@ -2,7 +2,7 @@ import styled from "styled-components"
 
 const StyledInput = styled.input`
   width: 100%;
-  height: 45px;
+  height: 58px;
   margin-bottom: 6px;
   padding: 10px;
   border: 1px solid #D5D5D5;
@@ -14,7 +14,9 @@ const StyledInput = styled.input`
   color: ${(props) => props.disabled ? "#AFAFAF" : "#666666"};
 
   &::placeholder{
-    color: #DBDBDB;
+    color: black;
+    font-size: 20px;
+    font-family: 'Raleway', sans-serif;
   }
 `
 

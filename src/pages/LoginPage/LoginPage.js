@@ -45,7 +45,7 @@ export default function LoginPage() {
             <StyledForm onSubmit={handleLogin}>
                 <StyledInput
                     name="email"
-                    placeholder="email"
+                    placeholder="E-mail"
                     type="email"
                     required
                     disabled={isLoading}
@@ -54,7 +54,7 @@ export default function LoginPage() {
                 />
                 <StyledInput
                     name="password"
-                    placeholder="senha"
+                    placeholder="Senha"
                     type="password"
                     required
                     disabled={isLoading}

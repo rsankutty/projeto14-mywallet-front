@@ -10,7 +10,7 @@ import { ThreeDots } from "react-loader-spinner"
 import apiAuth from "../../services/apiAuth"
 
 export default function SignUpPage() {
-    const [form, setForm] = useState({ email: "", password: "", name: "", image:"" })
+    const [form, setForm] = useState({ name: "", email: "", password: "", confirm_password: "" })
     const [isLoading, setIsLoading] = useState(false)
     const navigate = useNavigate()
 
@@ -23,14 +23,14 @@ export default function SignUpPage() {
         setIsLoading(true)
 
         apiAuth.signUp(form)
-        .then(res => {
-            setIsLoading(false)
-            navigate("/")
-        })
-        .catch(err => {
-            setIsLoading(false)
-            alert(err.response.data.message)
-        })
+            .then(res => {
+                setIsLoading(false)
+                navigate("/")
+            })
+            .catch(err => {
+                setIsLoading(false)
+                alert(err.response.data.message)
+            })
     }
 
     return (
@@ -38,8 +38,17 @@ export default function SignUpPage() {
             <h1>MyWallet</h1>
             <StyledForm onSubmit={handleSignUp}>
                 <StyledInput
+                    name="name"
+                    placeholder="Nome"
+                    type="text"
+                    required
+                    disabled={isLoading}
+                    value={form.name}
+                    onChange={handleForm}
+                />
+                <StyledInput
                     name="email"
-                    placeholder="email"
+                    placeholder="E-mail"
                     type="email"
                     required
                     disabled={isLoading}
@@ -48,7 +57,7 @@ export default function SignUpPage() {
                 />
                 <StyledInput
                     name="password"
-                    placeholder="senha"
+                    placeholder="Senha"
                     type="password"
                     required
                     disabled={isLoading}
@@ -56,32 +65,23 @@ export default function SignUpPage() {
                     onChange={handleForm}
                 />
                 <StyledInput
-                    name="name"
-                    placeholder="nome"
-                    type="text"
-                    required
-                    disabled={isLoading}
-                    value={form.name}
-                    onChange={handleForm}
-                />
-                <StyledInput
-                    name="image"
-                    placeholder="foto"
+                    name="confirm_password"
+                    placeholder="Confirme a senha"
                     type="url"
                     required
                     disabled={isLoading}
-                    value={form.image}
+                    value={form.confirm_password}
                     onChange={handleForm}
                 />
                 <StyledButton type="submit" disabled={isLoading}>
-                {isLoading ? (
+                    {isLoading ? (
                         <ThreeDots width={50} height={50} color="#FFFFFF" />
                     ) : "Cadastrar"}
                 </StyledButton>
             </StyledForm>
 
             <StyledLink to="/">
-                Já tem uma conta? Faça login!
+                Já tem uma conta? Entre agora!
             </StyledLink>
         </Container>
     )
