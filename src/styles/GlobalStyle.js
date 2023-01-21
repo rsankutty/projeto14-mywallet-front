@@ -33,6 +33,7 @@ const GlobalStyle = createGlobalStyle`
         width: 100%;
         height: 100%;
         font-family: 'Lexend Deca', sans-serif;
+        background-color: #9259BD;
     }
 
     ol, ul {

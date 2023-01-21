@@ -6,8 +6,10 @@ const StyledButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: 5px;
   border: none;
   border-radius: 4.5px;
+  font-weight: 700;
   cursor: pointer;
   pointer-events: ${(props) => props.disabled ? "none" : "all"};
   opacity: ${(props) => props.disabled ? 0.7 : 1};

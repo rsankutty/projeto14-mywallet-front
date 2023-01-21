@@ -11,11 +11,11 @@ export default function App() {
     <BrowserRouter>
       <UserProvider>
         <Routes>
-          <Route path="/" element={<LoginPage />} />
-          <Route path="/cadastro" element={<SignUpPage />} />
+          {/* <Route path="/" element={<LoginPage />} />
+          <Route path="/cadastro" element={<SignUpPage />} /> */}
           {/* <Route path="/home" element={<HomePage />} /> */}
-          {/* <Route path="/nova-entrada" element={<AddPage />} /> */}
-          {/* <Route path="/nova-saida" element={<RemovePage />} /> */}
+          {/* <Route path="/" element={<AddPage />} /> */}
+          <Route path="/" element={<RemovePage />} />
         </Routes>
       </UserProvider>
     </BrowserRouter>
