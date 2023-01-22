@@ -27,6 +27,9 @@ export const Header = styled.div`
   width: 100%;
   font-size: 26px;
   font-weight: 700;
+  img{
+    width: 30px;
+  }
 `
 export const Content = styled.div`
   background-color: white;

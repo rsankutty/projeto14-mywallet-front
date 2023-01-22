@@ -2,14 +2,16 @@ import { Container, Header } from "./styled"
 import StyledForm from "../../components/StyledForm"
 import StyledInput from "../../components/StyledInput"
 import StyledButton from "../../components/StyledButton"
-import StyledLink from "../../components/StyledLink"
 import { useNavigate } from "react-router-dom"
-import apiAuth from "../../services/apiAuth"
 import { useContext, useState } from "react"
 import { UserContext } from "../../contexts/UserContext"
 import { ThreeDots } from "react-loader-spinner"
+import arrow from "../../assets/arrow.svg"
+import axios from "axios"
 
-export default function RemovePage() {
+export default function OutletPage() {
+    const token = localStorage.getItem('token')
+
     const [form, setForm] = useState({ value: "", description: "" })
     const [isLoading, setIsLoading] = useState(false)
     const { setUser } = useContext(UserContext)
@@ -19,31 +21,40 @@ export default function RemovePage() {
         setForm({ ...form, [e.target.name]: e.target.value })
     }
 
-    function handleLogin(e) {
+    async function handleOutlet(e) {
         e.preventDefault()
         setIsLoading(true)
 
-        apiAuth.login(form)
-            .then(res => {
-                const { id, name, image, token } = res.data
+
+        const URL = `${process.env.REACT_APP_API_URL}/cashflow`;
+        const body = { ...form, type: 'outlet' };
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        }
+
+        try {
+            if (isNaN(Number(body.value))) {
                 setIsLoading(false)
-                setUser({ id, name, image, token })
-                // localStorage.setItem("token", token)
-                localStorage.setItem("user", JSON.stringify({ id, name, image, token }))
-                navigate("/home")
-            })
-            .catch(err => {
-                setIsLoading(false)
-                alert(err.response.data.message)
-            })
+                alert("Digite um número válido (ex: 123.456)")
+            } else {
+                await axios.post(URL, body, config);
+                navigate('/home');
+            }
+        } catch (err) {
+            setIsLoading(false)
+            alert(err.response.data);
+        }
     }
 
     return (
         <Container>
             <Header>
                 Nova saída
+                <img src={arrow} alt="go back symbol" onClick={() => navigate("/home")} />
             </Header>
-            <StyledForm onSubmit={handleLogin}>
+            <StyledForm onSubmit={handleOutlet}>
                 <StyledInput
                     name="value"
                     placeholder="Valor"

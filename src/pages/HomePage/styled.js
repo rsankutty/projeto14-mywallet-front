@@ -48,12 +48,13 @@ export const NoRegister= styled.div`
 
 export const ItemWrapper = styled.div`
   overflow-y: scroll;
-  height: 390px;
-  background-color: yellow;
+  height: 380px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 `
-export const Item = styled.div`
-  color: black;
-`
+
 export const SaldoWrapper = styled.div`
   width: 300px;
   display: flex;
@@ -64,6 +65,9 @@ export const SaldoWrapper = styled.div`
   font-weight: 700;
   font-size: 17px;
   color: black;
+  p{
+    color: ${props => Number(props.balance)>=0 ? '#03AC00' :'#C70000' };
+  }
 `
 
 export const StyledButton = styled.div`

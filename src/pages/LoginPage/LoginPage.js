@@ -5,10 +5,10 @@ import StyledInput from "../../components/StyledInput"
 import StyledButton from "../../components/StyledButton"
 import StyledLink from "../../components/StyledLink"
 import { useNavigate } from "react-router-dom"
-import apiAuth from "../../services/apiAuth"
 import { useContext, useState } from "react"
 import { UserContext } from "../../contexts/UserContext"
 import { ThreeDots } from "react-loader-spinner"
+import axios from "axios"
 
 export default function LoginPage() {
     const [form, setForm] = useState({ email: "", password: "" })
@@ -20,23 +20,22 @@ export default function LoginPage() {
         setForm({ ...form, [e.target.name]: e.target.value })
     }
 
-    function handleLogin(e) {
+   async function handleLogin(e) {
         e.preventDefault()
         setIsLoading(true)
 
-        apiAuth.login(form)
-            .then(res => {
-                const { id, name, image, token } = res.data
-                setIsLoading(false)
-                setUser({ id, name, image, token })
-                // localStorage.setItem("token", token)
-                localStorage.setItem("user", JSON.stringify({ id, name, image, token }))
-                navigate("/home")
-            })
-            .catch(err => {
-                setIsLoading(false)
-                alert(err.response.data.message)
-            })
+        const URL = `${process.env.REACT_APP_API_URL}/login`;
+		const body = form;
+
+		try {
+			const res = await axios.post(URL, body);
+			localStorage.setItem('token', res.data.token);
+			localStorage.setItem('name', res.data.name)
+			navigate('/home');
+		} catch (err) {
+            setIsLoading(false)
+			alert(err.response.data);
+		}
     }
 
     return (
@@ -68,7 +67,7 @@ export default function LoginPage() {
                 </StyledButton>
             </StyledForm>
 
-            <StyledLink to="/cadastro">
+            <StyledLink to="/sign-up">
                 Primeira vez? Cadastre-se!
             </StyledLink>
         </Container>

@@ -7,7 +7,7 @@ import StyledLink from "../../components/StyledLink"
 import { useNavigate } from "react-router-dom"
 import { useState } from "react"
 import { ThreeDots } from "react-loader-spinner"
-import apiAuth from "../../services/apiAuth"
+import axios from "axios"
 
 export default function SignUpPage() {
     const [form, setForm] = useState({ name: "", email: "", password: "", confirm_password: "" })
@@ -18,19 +18,28 @@ export default function SignUpPage() {
         setForm({ ...form, [e.target.name]: e.target.value })
     }
 
-    function handleSignUp(e) {
+    async function handleSignUp(e) {
         e.preventDefault()
         setIsLoading(true)
 
-        apiAuth.signUp(form)
-            .then(res => {
+        const URL = `${process.env.REACT_APP_API_URL}/sign-up`;
+		const body = form;
+
+		try {
+            if (body.password === body.confirm_password){
+                delete body.confirm_password
+                const res = await axios.post(URL, body);
+                console.log(res.data)
+                navigate('/');
+            } else {
                 setIsLoading(false)
-                navigate("/")
-            })
-            .catch(err => {
-                setIsLoading(false)
-                alert(err.response.data.message)
-            })
+                alert("Senhas não são iguais")
+            }
+			
+		} catch (err) {
+            setIsLoading(false)
+			alert(err.response.data);
+		}
     }
 
     return (
@@ -67,7 +76,7 @@ export default function SignUpPage() {
                 <StyledInput
                     name="confirm_password"
                     placeholder="Confirme a senha"
-                    type="url"
+                    type="password"
                     required
                     disabled={isLoading}
                     value={form.confirm_password}
