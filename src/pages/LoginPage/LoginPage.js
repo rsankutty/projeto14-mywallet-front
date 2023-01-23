@@ -5,15 +5,13 @@ import StyledInput from "../../components/StyledInput"
 import StyledButton from "../../components/StyledButton"
 import StyledLink from "../../components/StyledLink"
 import { useNavigate } from "react-router-dom"
-import { useContext, useState } from "react"
-import { UserContext } from "../../contexts/UserContext"
+import { useState } from "react"
 import { ThreeDots } from "react-loader-spinner"
 import axios from "axios"
 
 export default function LoginPage() {
     const [form, setForm] = useState({ email: "", password: "" })
     const [isLoading, setIsLoading] = useState(false)
-    const { setUser } = useContext(UserContext)
     const navigate = useNavigate()
 
     function handleForm(e) {

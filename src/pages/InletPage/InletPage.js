@@ -3,8 +3,7 @@ import StyledForm from "../../components/StyledForm"
 import StyledInput from "../../components/StyledInput"
 import StyledButton from "../../components/StyledButton"
 import { useNavigate } from "react-router-dom"
-import { useContext, useState } from "react"
-import { UserContext } from "../../contexts/UserContext"
+import {  useState } from "react"
 import { ThreeDots } from "react-loader-spinner"
 import arrow from "../../assets/arrow.svg"
 import axios from "axios"
@@ -14,7 +13,6 @@ export default function InletPage() {
 
     const [form, setForm] = useState({ value: "", description: "" })
     const [isLoading, setIsLoading] = useState(false)
-    const { setUser } = useContext(UserContext)
     const navigate = useNavigate()
 
     function handleForm(e) {

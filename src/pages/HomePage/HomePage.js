@@ -1,4 +1,4 @@
-import { ButtonContainer, Container, Content, Header, Item, ItemWrapper, NoRegister, SaldoWrapper, StyledButton, TextWrapper } from "./styled"
+import { ButtonContainer, Container, Content, Header, ItemWrapper, NoRegister, SaldoWrapper, StyledButton, TextWrapper } from "./styled"
 import home from "../../assets/home.svg"
 import plus from "../../assets/plus.svg"
 import minus from "../../assets/minus.svg"
@@ -28,10 +28,9 @@ export default function HomePage() {
             try {
                 const flowItems = await axios.get(URL, config);
                 setCashFlows(flowItems.data);
-                console.log(flowItems.data)
                 let saldo = 0
                 flowItems.data.map(item => {
-                    item.type == "inlet" ? saldo += Number(item.value) : saldo -= Number(item.value)
+                    item.type === "inlet" ? saldo += Number(item.value) : saldo -= Number(item.value)
                 })
                 setBalance(saldo)
             } catch (err) {
@@ -54,7 +53,7 @@ export default function HomePage() {
                 <img src={home} alt="home symbol" onClick={exitApp} />
             </Header>
             <Content>
-                {cashflows.length != 0 ?
+                {cashflows.length !== 0 ?
                     <ItemWrapper>
                         {cashflows.map(item =>
                             <FlowItem
